@@ -1,0 +1,11 @@
+{
+  "name": "prompts",
+  "description": "A list of prompts for the DECTalk self test",
+  "prompts": [
+    "A slow moving storm system will move across the northern great lakes region today and tonight. Snow associated with this system will continue across much of southwest lower michigan this morning.",
+    "This Afternoon: A 20 percent chance of showers. Partly sunny, with a high near 67. South wind around 20 mph, with gusts as high as 29 mph.",
+    "...WINTER STORM WARNING NOW IN EFFECT FOR SNOWY AND SIERRA MADRE RANGES TONIGHT THROUGH EARLY SUNDAY MORNING... WHAT...Heavy snow expected. Total snow accumulations of 6 to 8 inches, locally higher depending on elevation.",
+    "The National Weather Service in Shreveport LA has issued a Flood Warning for the following river in Texas. Neches River Near Diboll affecting Tyler, Houston, Angelina, Polk and Trinity Counties.",
+    "Now concluding the test."
+  ]
+}

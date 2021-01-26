@@ -1,0 +1,5 @@
+/.idea/
+/venv/
+/venv-mac/
+/__pycache__/
+/dectalk/__pycache__/
