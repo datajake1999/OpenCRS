@@ -2,6 +2,7 @@
 
 import asyncio
 import nwshandler
+import SpeechHandler as SpeechHandler
 import requests as r
 import coloredlogs, logging
 import json as j
@@ -11,16 +12,23 @@ logger.info("Loaded Logger!")
 coloredlogs.install('DEBUG', logger=logger)
 settings = j.load(open('settings.json', 'r'))
 
+
 # TODO: Learn async.. Whoops.
 async def main():
     logger.info('Starting Forecast Gen V2..')
+    output = ""
+    outfile = open('output.txt', "w+")
 
     # TODO: Add check for latest version from GitHub    -- can probably start on this soon
     # TODO: Use async to run getActiveAlerts every now and then and check for new alerts
-    # print(nwshandler.getActiveAlerts('CAZ071'))
     for z in settings['Zones']:
         logger.debug(f'OBTAIN ZONE FORECAST FOR ZONE {z}')
-        print(nwshandler.forecast(z))
+        output += nwshandler.forecast(z=z)
+        output += str(nwshandler.getActiveAlerts(z=z))
+
+    outfile.write(output)
+    # SpeechHandler.balcon(volume=25, rate=250, text='-f ..\\output.txt')
+    # SpeechHandler.dectalk()
 
 
 if __name__ == '__main__':

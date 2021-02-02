@@ -56,6 +56,8 @@ def getActiveAlerts(z='DCZ001'):
             #     l.critical(f'SEVERITY {severity}')
             #     print(desc)
 
+            return desc
+
 
 def forecast(z="DCZ001", t="land"):
     """"
@@ -91,7 +93,7 @@ def forecast(z="DCZ001", t="land"):
         for i in range(0,8):
             zf += f"{zfd['properties']['periods'][i]['name']}: {zfd['properties']['periods'][i]['detailedForecast']}\n"
 
-        zf += "---------------------------"   # Add Separator
+        zf += "---------------------------\n"   # Add Separator
 
         return zf
 
