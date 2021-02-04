@@ -32,12 +32,12 @@ def dectalk(r=230, v='np', text='No input was given.'):
         l.critical("say.exe does not exist in the dectalk directory!")
 
 
-def balcon(volume, rate, text="Hello world!"):
+def balcon(volume, rate, fileLocation):
     if path.exists('balcon/balcon.exe'):
         l.debug("Balcon.exe exists in the current directory.")
         l.debug(f"System platform is {platform}")
 
         if platform != 'win32':
-            system(f"cd balcon && wine balcon.exe -n 'ScanSoft Tom_Full_22kHz' -d pronunciationfix.dic -s {rate} -v {volume} {text}")
+            system(f'cd balcon && wine balcon.exe -n "ScanSoft Tom_Full_22kHz" -d pronunciationfix.dic -s {rate} -v {volume} -f {fileLocation}')
         else:
-            system(f"cd balcon && balcon.exe -n 'ScanSoft Tom_Full_22kHz' -d pronunciationfix.dic -s {rate} -v {volume} {text}")
+            system(f'cd balcon && balcon.exe -n "ScanSoft Tom_Full_22kHz" -d pronunciationfix.dic -s {rate} -v {volume} -f {fileLocation}')
