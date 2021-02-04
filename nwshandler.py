@@ -33,6 +33,7 @@ def getActiveAlerts(z='DCZ001'):
     desc = ""
     severity = ""
     blockchannel = []
+    product = ""
 
     if None in active_alerts['features']:
         l.debug(f'No alerts listed for zone {z}')
@@ -46,17 +47,11 @@ def getActiveAlerts(z='DCZ001'):
             desc = id['properties']['description']  # Alert details
             severity = id['properties']['severity']
             blockchannel = id['properties']['parameters']['BLOCKCHANNEL']
-            # BLOCKCHANNEL lets us see if the alert should interrupt regular broadcasting
 
-            # TODO: Make a better system for forcing alerts onto the broadcast cycle
+            product += f"{headline}\n"
+            product += f"{desc}\n"
 
-            # if 'EAS' in blockchannel:
-            #     l.critical(headline)
-            #     l.critical(f'EAS ACTIVATION REQUESTED FOR ALERT {id["id"]}')
-            #     l.critical(f'SEVERITY {severity}')
-            #     print(desc)
-
-            return desc
+        return product
 
 
 def forecast(z="DCZ001", t="land"):
