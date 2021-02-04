@@ -7,10 +7,10 @@ import requests as r
 import coloredlogs, logging
 import json as j
 
+settings = j.load(open('settings.json', 'r'))
 logger = logging.getLogger(__name__)
 logger.info("Loaded Logger!")
-coloredlogs.install('DEBUG', logger=logger)
-settings = j.load(open('settings.json', 'r'))
+coloredlogs.install(settings['loglevel'], logger=logger)    # I'd recommend keeping this at DEBUG
 
 
 async def main():
@@ -26,13 +26,25 @@ async def main():
 
     outfile.write(output)
     logger.info("Wrote text file in /forecastgen-v2/output.txt")
-    # SpeechHandler.balcon(volume=25, rate=250, fileLocation='-f ../output.txt')
+    # SpeechHandler.balcon(volume=25, rate=250, filelocation='-f ../output.txt')
     # SpeechHandler.dectalk()
 
 
 if __name__ == '__main__':
     noaa = r.get('https://api.weather.gov')
+    # github = r.get('https://api.github.com/repos/Zeexel/forecastgen-v2/releases/latest').json()
 
+    # Code below should be commented until the first release of forecastgen-v2
+    # Github release check
+    """
+    ver = settings['version']
+    if github['name'] != ver:
+        logger.warning("You are not using the latest version of forecastgen! Latest version: {github['name']}")
+    else:
+        logger.info("Using the latest build of forecastgen!")
+        """
+
+    # Check NOAA status
     if noaa.ok:
         logger.info("NWS Api is up!")
         asyncio.run(main())
