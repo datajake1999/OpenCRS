@@ -1,9 +1,31 @@
 {
-  "voice": "ScanSoft Tom_Full_22kHz",
+  "logLevel": "DEBUG",
 
-  "Zones": [
-    "AZZ003",
-    "DCZ001",
-    "CAZ071"
-  ]
+  "ForecastGenSettings": {
+    "Zones": [
+      "AZZ003",
+      "CAZ071",
+      "DCZ001"
+    ],
+    "PriorityZones": [
+      "Unimplemented"
+    ]
+
+  },
+
+  "TTS": {
+    "DECTalk": {
+      "voice": "np",
+      "rate": 250,
+      "phonemes": "off"
+    },
+
+    "balcon": {
+      "download_here": "http://www.cross-plus-a.com/bconsole.htm",
+      "voice": "Microsoft Sam",
+      "user-dictionary": "pronunciationfix.dic",
+      "volume": 25,
+      "speed": 100
+    }
+  }
 }
