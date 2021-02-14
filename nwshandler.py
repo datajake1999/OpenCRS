@@ -6,7 +6,7 @@ l = logging.getLogger(__name__)
 coloredlogs.install(level='DEBUG', logger=l)
 
 """
-So, just a quick note, it seems like NOAA and the NWS have actually improved their API quite a bit since forecast gen v1
+So, just a quick note, it seems like NOAA and the NWS have actually improved their API quite a bit since fgen-v1
 was first released. Now, we can prioritize alerts based on their severity, BLOCKCHANNELS, etc.
 
 They also provide a lot of the EAS stuff used for their own broadcasting, so it's really easy to just straight up
@@ -43,13 +43,14 @@ def getActiveAlerts(z='DCZ001'):
             l.debug(f"ALERT FOUND - {alert['id']}")
             id = requests.get(alert['id']).json()   # Get the full alert details from the alert's ID in the API
 
-            headline = id['properties']['headline']
+            headline = id['properties']['parameters']['NWSheadline'][0]
             desc = id['properties']['description']  # Alert details
             severity = id['properties']['severity']
             blockchannel = id['properties']['parameters']['BLOCKCHANNEL']
 
             product += f"{headline}\n"
             product += f"{desc}\n"
+            product += "---------------------------\n"  # Add seperator
 
         return product
 
@@ -83,10 +84,12 @@ def forecast(z="DCZ001", t="land"):
         zf += f"The zone forecast for {zd['properties']['name']}:\n"
 
         if ah is not None:
-            zf += f"{ah}\n"
+            zf += f"{ah}.\n"
 
-        for i in range(0,8):
-            zf += f"{zfd['properties']['periods'][i]['name']}: {zfd['properties']['periods'][i]['detailedForecast']}\n"
+        forecastPeriods = list(zfd['properties']['periods'])
+
+        for i in forecastPeriods:
+            zf += f"{i['name']}: {i['detailedForecast']}\n"
 
         zf += "---------------------------\n"   # Add Separator
 
@@ -98,3 +101,6 @@ def forecast(z="DCZ001", t="land"):
     except IndexError:
         pass
 
+
+def getObservation(s):
+    stationData = requests.get(s).json()
