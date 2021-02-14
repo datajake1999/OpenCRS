@@ -37,7 +37,7 @@ def balcon(voice, volume, rate, filelocation):
         l.debug("Balcon.exe exists in the current directory.")
         l.debug(f"System platform is {platform}")
 
-        # TODO: Fix bug where balcon can't read .txt files
+
         if platform != 'win32':
             system(f'cd balcon && wine balcon.exe -n "{voice}" -d pronunciationfix.dic -s {rate} -v {volume} -f {filelocation}')
         else:

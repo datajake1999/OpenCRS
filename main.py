@@ -2,14 +2,13 @@
 
 import asyncio
 import nwshandler
-import SpeechHandler as SpeechHandler
+import SpeechHandler
 import requests as r
 import coloredlogs, logging
 import json as j
 
 settings = j.load(open('settings.json', 'r'))
 logger = logging.getLogger(__name__)
-logger.info("Loaded Logger!")
 coloredlogs.install(settings['loglevel'], logger=logger)    # I'd recommend keeping this at DEBUG
 
 
@@ -25,8 +24,9 @@ async def main():
         output += str(nwshandler.getActiveAlerts(z=z))
 
     outfile.write(output)
+    outfile.close()
     logger.info("Wrote text file in /forecastgen-v2/output.txt")
-    # SpeechHandler.balcon(volume=25, rate=250, filelocation='-f ../output.txt')
+    # SpeechHandler.balcon(voice='ScanSoft Tom_Full_22kHz', volume=25, rate=250, filelocation='../output.txt')
     # SpeechHandler.dectalk()
 
 
