@@ -26,8 +26,12 @@ async def main():
     outfile.write(output)
     outfile.close()
     logger.info("Wrote text file in /forecastgen-v2/output.txt")
-    # SpeechHandler.balcon(voice='ScanSoft Tom_Full_22kHz', volume=25, rate=250, filelocation='../output.txt')
-    # SpeechHandler.dectalk()
+
+    # TTS
+    TTSoptions = settings["TTS"]
+    if TTSoptions["enabled"]:
+        logger.warning("Text-to-speech is not yet implemented.")
+
 
 
 if __name__ == '__main__':

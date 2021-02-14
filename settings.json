@@ -18,10 +18,13 @@
   },
 
   "TTS": {
-    "DECTalk": {
+    "enabled": true,
+    "engine": "dectalk",
+
+    "dectalk": {
       "voice": "np",
       "rate": 250,
-      "phonemes": "off"
+      "phonemes": false
     },
 
     "balcon": {
