@@ -14,7 +14,7 @@ As opposed to the previous iteration of ["Basic TTS support"](https://github.com
 
 In order to enable TTS, simple go into ``settings.json`` and scroll down to ``"TTS"``. You can then enable TTS by setting the ``"enable"`` variable to true.
 
-###DECTalk
+### DECTalk
 [DECTalk](https://en.wikipedia.org/wiki/DECtalk) comes pre-included with the software, and is the default option for the ``"engine"`` variable. 
 
 This should be the base DECTalk settings in an unedited settings file:
@@ -33,7 +33,7 @@ I will soon make a more comprehensive guide once full support for DECTalk is add
 * ``"rate"`` is the speed at which the voice reads the text given to it.
 * ``"phonemes"`` is currently unused in the source code, but will enable the engine to use phonemes, which can allow it to sing.
 
-###Balcon
+### Balcon
 Balcon is the CLI variant for [Balabolka](http://www.cross-plus-a.com/balabolka.htm), a freeware TTS reader. It's not included in the source code due to the licensing, but it is supported out of the box once installed, and the ``balcon`` folder is put into the same directory as Forecast-Gen.
 
 Once installed, it's recommended to use the ``pronunciationfix.dic`` file in the ``extras`` directory, as some things can be read incorrectly by a lot of TTS voices.
