@@ -1,8 +1,10 @@
 {
-  "version": "UNUSED",
+  "version": "0.0.1",
   "loglevel": "DEBUG",
 
   "ForecastGenSettings": {
+    "system": "imperial",
+
     "Zones": [
       "AZZ003",
       "CAZ071",
@@ -12,13 +14,16 @@
       "Unimplemented"
     ],
     "ObservationZones": [
-      "Unimplemented"
+      "KIFP",
+      "KEED",
+      "QMBA3",
+      "TCRA3"
     ]
 
   },
 
   "TTS": {
-    "enabled": true,
+    "enabled": false,
     "engine": "dectalk",
 
     "dectalk": {
@@ -29,7 +34,7 @@
 
     "balcon": {
       "download_here": "http://www.cross-plus-a.com/bconsole.htm",
-      "voice": "Microsoft Sam",
+      "voice": "ATT Mike16",
       "dictionary-path": "pronunciationfix.dic",
       "volume": 25,
       "speed": 100

@@ -1,24 +1,12 @@
 import requests
 import logging
 import coloredlogs
+from math import floor
+import json as j
 
+settings = j.load(open('settings.json',  'r'))
 l = logging.getLogger(__name__)
-coloredlogs.install(level='DEBUG', logger=l)
-
-"""
-So, just a quick note, it seems like NOAA and the NWS have actually improved their API quite a bit since fgen-v1
-was first released. Now, we can prioritize alerts based on their severity, BLOCKCHANNELS, etc.
-
-They also provide a lot of the EAS stuff used for their own broadcasting, so it's really easy to just straight up
-pass a lot of that onto a open sourced EAS/SAME Encoder like OpenENDEC or similar.
-
-Honestly, it seems like the only issue now is a thing where they can't keep their entire fucking API up for more than a
-literal fucking day.
-
-Thanks NOAA.
-
-Zeexel @ 0:13 MST - Jan. 27 2021
-"""
+coloredlogs.install(level=settings['loglevel'], logger=l)
 
 
 def getActiveAlerts(z='DCZ001'):
@@ -103,4 +91,45 @@ def forecast(z="DCZ001", t="land"):
 
 
 def getObservation(s):
-    stationData = requests.get(s).json()
+    """
+    Obtains the latest data from the station specified.
+    """
+    stationData = requests.get(f'https://api.weather.gov/stations/{s}/observations/latest').json()
+    stationInfo = requests.get(f'https://api.weather.gov/stations/{s}').json()
+    name = stationInfo['properties']['name']
+    obs = ""
+
+    # This is gonna require a lot of if statements
+    # YandereDev time
+    try:
+        con = stationData['properties']['textDescription']
+        temp = floor(stationData['properties']['temperature']['value'])
+        dp = floor(stationData['properties']['dewpoint']['value'])
+        rh = floor(stationData['properties']['relativeHumidity']['value'])
+
+        obs += f"At {name}, {con}. "
+
+        # TODO: Round & floor decimals to prevent trailing decimals when it comes to
+        # Temperature + Dewpoint, as well as relative humidity.
+
+        if temp != None:
+            if settings['ForecastGenSettings']['system'] == 'metric':
+                obs += f"Temperature {str(temp)} degrees, "
+            elif settings['ForecastGenSettings']['system'] == 'imperial':
+                temp = (temp * 9 / 5 + 32)  # Convert the temperature from C to F
+                obs += f"Temperature {str(temp)} degrees, "
+
+        if dp != None:
+            if settings['ForecastGenSettings']['system'] == 'metric':
+                obs += f"Dewpoint {str(dp)}, "
+            elif settings['ForecastGenSettings']['system'] == 'imperial':
+                dp = (dp * 9 / 5 + 32)
+                obs += f"Dewpoint {str(dp)}, "
+
+        if dp != None:
+            obs += f"The relative humidity was {rh}%. \n"
+
+    except Exception as e:
+        l.error(f"Unable to obtain data for {s}!\n{e}")
+        obs += f"At {name}, the observations were unavailable.\n"    
+    return obs

@@ -3,9 +3,11 @@
 import asyncio
 import nwshandler
 import SpeechHandler
+import time
 import requests as r
 import coloredlogs, logging
 import json as j
+
 
 settings = j.load(open('settings.json', 'r'))
 logger = logging.getLogger(__name__)
@@ -21,7 +23,14 @@ async def main():
     for z in settings['ForecastGenSettings']['Zones']:
         logger.debug(f'OBTAIN ZONE FORECAST FOR ZONE {z}')
         output += nwshandler.forecast(z=z)
-        output += str(nwshandler.getActiveAlerts(z=z))
+        output += nwshandler.getActiveAlerts(z=z)
+
+    output += (f"Here are the current observations, as of {time.strftime('%I:%M %p %Z')}.\n")
+
+    for s in settings['ForecastGenSettings']['ObservationZones']:
+        logger.debug(f"OBTAIN DATA FROM STATION {s}")
+        output += nwshandler.getObservation(s=s)
+
 
     outfile.write(output)
     outfile.close()
@@ -30,7 +39,18 @@ async def main():
     # TTS
     TTSoptions = settings["TTS"]
     if TTSoptions["enabled"]:
-        logger.warning("Text-to-speech is not yet implemented.")
+        logger.info("Note that TTS implementation is very janky! It relies on DECTalk or Balabolka, as well as your own installed TTS voices.")
+        logger.info("Check README for instructions on using Balcon/DECTalk with Forecast-Gen!")
+
+        TTSengine = TTSoptions['engine']
+        DTSettings = TTSoptions['dectalk']
+        BALSettings = TTSoptions['balcon']
+
+        if TTSengine == "dectalk":
+            SpeechHandler.dectalk(r=DTSettings['rate'], v=DTSettings['voice'])
+        elif TTSengine == "balcon":
+            SpeechHandler.balcon(voice=f"{BALSettings['voice']}", volume=BALSettings['volume'], rate=BALSettings['speed'], filelocation="../output.txt")
+
 
 
 
