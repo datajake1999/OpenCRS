@@ -8,16 +8,16 @@ The DECTalk version included in OpenCRS is ``BETA 5.0``
 
 The voices for DECtalk are as follows:
 
-Paul (Default) - ``[:np]``
-Harry/igor - ``[:nh]``
-Frank - ``[:nf]``
-Dennis - ``[:nd]``
-Betty - ``[:nb]``
-Ursula - ``[:nu]``
-Wendy - ``[:nw]``
-Rita - ``[:nr]``
-Kit - ``[:nk]``
-Variable Val - ``[:nv]``
+* Paul (Default) - ``[:np]``
+* Harry/igor - ``[:nh]``
+* Frank - ``[:nf]``
+* Dennis - ``[:nd]``
+* Betty - ``[:nb]``
+* Ursula - ``[:nu]``
+* Wendy - ``[:nw]``
+* Rita - ``[:nr]``
+* Kit - ``[:nk]``
+* Variable Val - ``[:nv]`` (Sounds identical to Paul unless pitch is modified.)
 
 Any of these voices can be used by changing the ``"voice"`` variable in settings.json with any of their two-letter identifiers. By default, OpenCRS uses the Paul voice.
 
