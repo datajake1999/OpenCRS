@@ -2,7 +2,7 @@
   "version": "0.0.1",
   "loglevel": "DEBUG",
 
-  "ForecastGenSettings": {
+  "OpenCRSsettings": {
     "system": "imperial",
 
     "Zones": [
@@ -34,7 +34,7 @@
 
     "balcon": {
       "download_here": "http://www.cross-plus-a.com/bconsole.htm",
-      "voice": "ATT Mike16",
+      "voice": "ScanSoft Tom_Full_22kHz",
       "dictionary-path": "pronunciationfix.dic",
       "volume": 25,
       "speed": 100

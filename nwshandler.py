@@ -36,8 +36,8 @@ def getActiveAlerts(z='DCZ001'):
             severity = id['properties']['severity']
             blockchannel = id['properties']['parameters']['BLOCKCHANNEL']
 
-            product += f"{headline}\n"
-            product += f"{desc}\n"
+            product += f"{headline}.\n"
+            product += f"{desc}..\n"
             product += "---------------------------\n"  # Add seperator
 
         return product
@@ -107,22 +107,25 @@ def getObservation(s):
         dp = floor(stationData['properties']['dewpoint']['value'])
         rh = floor(stationData['properties']['relativeHumidity']['value'])
 
-        obs += f"At {name}, {con}. "
-
         # TODO: Round & floor decimals to prevent trailing decimals when it comes to
         # Temperature + Dewpoint, as well as relative humidity.
 
+        if con != "":
+            obs += f"At {name}, it was {con}. "
+        else:
+            obs += f"At {name}, the conditions were unavailable. "
+
         if temp != None:
-            if settings['ForecastGenSettings']['system'] == 'metric':
+            if settings['OpenCRSsettings']['system'] == 'metric':
                 obs += f"Temperature {str(temp)} degrees, "
-            elif settings['ForecastGenSettings']['system'] == 'imperial':
+            elif settings['OpenCRSsettings']['system'] == 'imperial':
                 temp = (temp * 9 / 5 + 32)  # Convert the temperature from C to F
                 obs += f"Temperature {str(temp)} degrees, "
 
         if dp != None:
-            if settings['ForecastGenSettings']['system'] == 'metric':
+            if settings['OpenCRSsettings']['system'] == 'metric':
                 obs += f"Dewpoint {str(dp)}, "
-            elif settings['ForecastGenSettings']['system'] == 'imperial':
+            elif settings['OpenCRSsettings']['system'] == 'imperial':
                 dp = (dp * 9 / 5 + 32)
                 obs += f"Dewpoint {str(dp)}, "
 

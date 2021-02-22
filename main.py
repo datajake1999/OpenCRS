@@ -15,26 +15,26 @@ coloredlogs.install(settings['loglevel'], logger=logger)    # I'd recommend keep
 
 
 async def main():
-    logger.info('Starting Forecast Gen V2..')
+    logger.info('Starting OpenCRS..')
     output = ""
     outfile = open('output.txt', "w+")
 
     # TODO: Use async to run getActiveAlerts every now and then and check for new alerts
-    for z in settings['ForecastGenSettings']['Zones']:
+    for z in settings['OpenCRSsettings']['Zones']:
         logger.debug(f'OBTAIN ZONE FORECAST FOR ZONE {z}')
         output += nwshandler.forecast(z=z)
         output += nwshandler.getActiveAlerts(z=z)
 
     output += (f"Here are the current observations, as of {time.strftime('%I:%M %p %Z')}.\n")
 
-    for s in settings['ForecastGenSettings']['ObservationZones']:
+    for s in settings['OpenCRSsettings']['ObservationZones']:
         logger.debug(f"OBTAIN DATA FROM STATION {s}")
         output += nwshandler.getObservation(s=s)
 
 
     outfile.write(output)
     outfile.close()
-    logger.info("Wrote text file in /forecastgen-v2/output.txt")
+    logger.info("Wrote output.txt successfully!")
 
     # TTS
     TTSoptions = settings["TTS"]
