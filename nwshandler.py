@@ -117,20 +117,20 @@ def getObservation(s):
 
         if temp != None:
             if settings['OpenCRSsettings']['system'] == 'metric':
-                obs += f"Temperature {str(temp)} degrees, "
+                obs += f"Temperature {str(round(temp))} degrees, "
             elif settings['OpenCRSsettings']['system'] == 'imperial':
                 temp = (temp * 9 / 5 + 32)  # Convert the temperature from C to F
-                obs += f"Temperature {str(temp)} degrees, "
+                obs += f"Temperature {str(round(temp))} degrees, "
 
         if dp != None:
             if settings['OpenCRSsettings']['system'] == 'metric':
-                obs += f"Dewpoint {str(dp)}, "
+                obs += f"Dewpoint {str(round(dp))}, "
             elif settings['OpenCRSsettings']['system'] == 'imperial':
                 dp = (dp * 9 / 5 + 32)
-                obs += f"Dewpoint {str(dp)}, "
+                obs += f"Dewpoint {str(round(dp))}, "
 
-        if dp != None:
-            obs += f"The relative humidity was {rh}%. \n"
+        if rh != None:
+            obs += f"relative humidity {rh}%. \n"
 
     except Exception as e:
         l.error(f"Unable to obtain data for {s}!\n{e}")
