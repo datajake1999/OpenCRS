@@ -1,5 +1,5 @@
 {
-  "version": "0.0.1",
+  "version": "0.1-GIT",
   "loglevel": "DEBUG",
 
   "OpenCRSsettings": {
@@ -24,7 +24,7 @@
 
   "TTS": {
     "enabled": false,
-    "engine": "dectalk",
+    "engine": "balcon",
 
     "dectalk": {
       "voice": "np",
@@ -37,7 +37,7 @@
       "voice": "ScanSoft Tom_Full_22kHz",
       "dictionary-path": "pronunciationfix.dic",
       "volume": 25,
-      "speed": 100
+      "speed": 125
     }
   }
 }
