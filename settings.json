@@ -1,9 +1,10 @@
 {
-  "version": "0.1-GIT",
+  "version": "0.2-GIT",
   "loglevel": "DEBUG",
 
   "OpenCRSsettings": {
     "system": "imperial",
+    "apihandler": "noaa",
 
     "Zones": [
       "AZZ003",

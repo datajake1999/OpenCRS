@@ -1,5 +1,3 @@
-# FORECAST GEN V2 #
-
 import asyncio
 import nwshandler
 import SpeechHandler

@@ -136,3 +136,6 @@ def getObservation(s):
         l.error(f"Unable to obtain data for {s}!\n{e}")
         obs += f"At {name}, the observations were unavailable.\n"    
     return obs
+
+def getSynopsis():
+    print("Dear NOAA: Please add synopsis products to your API.")
