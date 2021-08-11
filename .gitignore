@@ -2,6 +2,7 @@
 /venv/
 /venv-mac/
 /__pycache__/
+/apihandlers/__pycache__/
 /dectalk/__pycache__/
 /output.txt
 /balcon/

@@ -1,11 +1,9 @@
 import asyncio
-import nwshandler
 import SpeechHandler
-import time
+import generators
 import requests as r
 import coloredlogs, logging
 import json as j
-
 
 settings = j.load(open('settings.json', 'r'))
 logger = logging.getLogger(__name__)
@@ -14,26 +12,17 @@ coloredlogs.install(settings['loglevel'], logger=logger)    # I'd recommend keep
 
 async def main():
     logger.info('Starting OpenCRS..')
-    output = ""
-    outfile = open('output.txt', "w+")
 
-    # TODO: Use async to run getActiveAlerts every now and then and check for new alerts
-    for z in settings['OpenCRSsettings']['Zones']:
-        logger.info(f'Getting forecast data from zone {z}')
-        output += nwshandler.forecast(z=z)
-        output += nwshandler.getActiveAlerts(z=z)
+    # Use different generators based on the current
+    if (settings['OpenCRSsettings']['apihandler'] == "noaa"):
+        logger.debug("Generating output.txt using NOAA's API..")
+        generators.genNWS()
+    elif (settings['OpenCRSsettings']['apihandler'] == "ibm"):
+        logger.debug("Generating output.txt using IBM's API..")
+        generators.genIBM()
 
-    output += (f"Here are the current observations, as of {time.strftime('%I:%M %p %Z')}.\n")
 
-    for s in settings['OpenCRSsettings']['ObservationZones']:
-        logger.info(f"Getting data from zone {s}")
-        output += nwshandler.getObservation(s=s)
-
-    
-
-    outfile.write(output)
-    outfile.close()
-    logger.info("Wrote output.txt successfully!")
+    # TODO: Make radio loop
 
     # TTS
     TTSoptions = settings["TTS"]
@@ -54,18 +43,19 @@ async def main():
 
 
 if __name__ == '__main__':
+    ver = '0.2-GIT'     # OpenCRS version
     noaa = r.get('https://api.weather.gov')
 
     #Github release check
-    ver = settings['version']
     try:
         github = r.get('https://api.github.com/repos/Zeexel/OpenCRS/releases/latest').json()
         if github['name'] != ver:
-            logger.warning("You are not using the latest version of forecastgen! Latest version: {github['name']}")
+            logger.warning(f"Version {github['name']} is currently out! You're using version {ver}.")
         else:
             logger.info("Using the latest build of OpenCRS!")
-    except Exception:
-        logger.error("Could not obtain the latest version of OpenCRS! (Probably cause there isn't a release build yet..)")
+    except Exception as e:
+        logger.error("Could not obtain the latest version of OpenCRS!")
+        logger.debug(f"FAILED TO OBTAIN OPENCRS VERSION\n{e}")
 
     # Check NOAA status
     if noaa.ok:
