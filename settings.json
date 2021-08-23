@@ -3,8 +3,11 @@
 
   "OpenCRSsettings": {
     "system": "imperial",
-    "apihandler": "noaa",
+    "apihandler": "noaa"
+  },
 
+  "NWSsettings": {
+    "ForecastOffice": "vef",
     "Zones": [
       "AZZ003",
       "CAZ071",
@@ -19,7 +22,6 @@
       "QMBA3",
       "TCRA3"
     ]
-
   },
 
   "TTS": {

@@ -28,7 +28,6 @@ def getActiveAlerts(z='DCZ001'):
         pass
     else:
         for alert in active_alerts['features']:
-            l.debug(f"ALERT FOUND - {alert['id']}")
             id = requests.get(alert['id']).json()   # Get the full alert details from the alert's ID in the API
 
             headline = id['properties']['parameters']['NWSheadline'][0]
@@ -39,6 +38,8 @@ def getActiveAlerts(z='DCZ001'):
             product += f"{headline}.\n"
             product += f"{desc}..\n"
             product += "---------------------------\n"  # Add seperator
+
+            l.debug(f"ALERT FOUND\nBLOCKCHANNEL {blockchannel}\nSEVERITY {severity}\n{alert['id']}")
 
         return product
 
@@ -137,5 +138,16 @@ def getObservation(s):
         obs += f"At {name}, the observations were unavailable.\n"    
     return obs
 
-def getSynopsis():
-    print("Dear NOAA: Please add synopsis products to your API.")
+def getSynopsis(fo):
+    afdProducts = requests.get(f'https://api.weather.gov/products/types/AFD/locations/{fo}').json()
+    afd = requests.get(afdProducts['@graph'][0]['@id']).json()  # Grabs the latest AFD product, @id being the URL
+    l.debug(f"AFD PRODUCT URL {afdProducts['@graph'][0]['@id']}")
+
+    start = '.SYNOPSIS...'
+    end = "&&"  # For some reason this is at the end of each synopsis product
+    productText = afd['productText']
+    syn = (productText.split(start))[1].split(end)[0]   # Take everything but the synopsis text from the AFD
+    
+    # TODO: Add SYN product edge case
+
+    return syn

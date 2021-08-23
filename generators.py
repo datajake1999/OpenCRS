@@ -16,14 +16,14 @@ def genNWS():
     outfile = open('output.txt', "w+")
     txt = ""
     
-    for z in settings['OpenCRSsettings']['Zones']:
+    for z in settings['NWSsettings']['Zones']:
         logger.info(f'Getting forecast data from zone {z}')
         txt += nwshandler.forecast(z=z)
         txt += nwshandler.getActiveAlerts(z=z)
 
     txt += (f"Here are the current observations, as of {time.strftime('%I:%M %p %Z')}.\n")
 
-    for s in settings['OpenCRSsettings']['ObservationZones']:
+    for s in settings['NWSsettings']['ObservationZones']:
         logger.info(f"Getting data from zone {s}")
         txt += nwshandler.getObservation(s=s)
 
