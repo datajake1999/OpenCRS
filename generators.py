@@ -15,12 +15,19 @@ def genNWS():
 
     outfile = open('output.txt', "w+")
     txt = ""
+
+    # Synopsis
+    txt += "Here is the regional Synopsis from the National Weather Service:\n"
+    txt += nwshandler.getSynopsis(settings['NWSsettings']['ForecastOffice'])
+    txt += "---------------------------\n"
     
+    # Zone forecasts - defaults to land
     for z in settings['NWSsettings']['Zones']:
         logger.info(f'Getting forecast data from zone {z}')
         txt += nwshandler.forecast(z=z)
         txt += nwshandler.getActiveAlerts(z=z)
 
+    # Regional Observations
     txt += (f"Here are the current observations, as of {time.strftime('%I:%M %p %Z')}.\n")
 
     for s in settings['NWSsettings']['ObservationZones']:
@@ -30,10 +37,6 @@ def genNWS():
     # Write then close the output.txt file
 
     if (txt != None):
-        # Someone should make an issue if this doesn't work
-        # because it was very in-and-out with working when I orginally
-        # implemented this, but now it seems to work 100% of the time,
-        # so i dont know whats going on there.
         outfile.write(txt)
         logger.info("Wrote to output.txt successfully!")
         outfile.close()
