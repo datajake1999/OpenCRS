@@ -2,7 +2,7 @@
  
 As mentioned in the README for OpenCRS, here's that more comprehensive DECTalk guide.
 
-The DECTalk version included in OpenCRS is ``BETA 5.0``
+The DECTalk version included in OpenCRS is ``4.60 NWS``
 
 ## Voices
 
